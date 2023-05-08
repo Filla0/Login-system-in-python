@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def home(request):
@@ -39,6 +39,8 @@ def signin(request):
         pass1 = request.POST['pass1']
 
         user = authenticate(username username, password=pass1)
+
+        
 
     return render(request, "authentication/signin.html")
 
