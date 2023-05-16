@@ -30,6 +30,8 @@ def signup(request):
         if len(username)>10:
             messages.error(request, "Username must be under 10 charecters")
         
+        if pass1 != pass2:
+            messages.error(request, "Passwords didn't match!")
         
 
         myuser = User.objects.create_user(username, email, pass1)
