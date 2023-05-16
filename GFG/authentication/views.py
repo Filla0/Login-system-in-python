@@ -32,6 +32,10 @@ def signup(request):
         
         if pass1 != pass2:
             messages.error(request, "Passwords didn't match!")
+
+        if not username.isalnum():
+            messages.error(request, "Username must be Alpha-Numeric!")
+            return redirect('home')
         
 
         myuser = User.objects.create_user(username, email, pass1)
