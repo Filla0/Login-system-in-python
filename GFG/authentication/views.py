@@ -19,6 +19,10 @@ def signup(request):
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
 
+        if User.objects.filter(username=username):
+            messages.error(request, "Username already exist! Please try some other username")
+            return redirect('home')
+
         myuser = User.objects.create_user(username, email, pass1)
         myuser.first_name = fname
         myuser.last_name = lname
