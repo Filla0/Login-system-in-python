@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from gfg import settings
+from django.core.mail import send_mail
 
 # Create your views here.
 def home(request):
@@ -23,9 +25,9 @@ def signup(request):
             messages.error(request, "Username already exist! Please try some other username")
             return redirect('home')
         
-        if User.objects.filter(email=email):
-            messages.error(request, "Email already registered!")
-            return redirect('home')
+        # if User.objects.filter(email=email):
+        #     messages.error(request, "Email already registered!")
+        #     return redirect('home')
         
         if len(username)>10:
             messages.error(request, "Username must be under 10 charecters")
@@ -44,7 +46,16 @@ def signup(request):
 
         myuser.save()
 
-        messages.success(request, "Your Account has been successfully created.")
+        messages.success(request, "Your Account has been successfully created. We have sent you a confimation email, Please confirm your email in order to activate your account.")
+
+
+        #Welcome Email
+
+        subject = "Welcome to GFG - Django Login!!"
+        message = "Hello" + myuser.first_name + "!! \n" + "Welcome to GFG!! \n Thank for visiting our website \n we have also sent you a comfirmation email, please confirm your email address in order to activate your account. \n\n Regards\n Filimon"
+        from_email = settings.EMAIL_HOST_USER
+        to_list = [myuser.email]
+        send_mail(subject, message, from_email, to_list, fail_silently=True)
 
         return redirect('signin')
 
