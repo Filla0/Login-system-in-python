@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from gfg import settings
 from django.core.mail import send_mail
+from django.contrib.sites.shortcuts import get_current_site
 
 # Create your views here.
 def home(request):
@@ -57,6 +58,12 @@ def signup(request):
         from_email = settings.EMAIL_HOST_USER
         to_list = [myuser.email]
         send_mail(subject, message, from_email, to_list, fail_silently=True)
+
+
+        # Email Address Confirmation Email
+        current_site = get_current_site(request)
+        email_subject = "Confirm your email @ GFG - Django Login!!"
+        message2 = render_to_string('email_confirmation.html')
 
         return redirect('signin')
 
