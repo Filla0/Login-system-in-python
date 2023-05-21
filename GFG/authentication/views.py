@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes, force_text
+from django.utils.encoding import force_bytes, force_str
 from . tokens import generate_token
 from django.core.mail import EmailMessage, send_mail
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -32,9 +32,9 @@ def signup(request):
             messages.error(request, "Username already exist! Please try some other username")
             return redirect('home')
         
-        # if User.objects.filter(email=email):
-        #     messages.error(request, "Email already registered!")
-        #     return redirect('home')
+        if User.objects.filter(email=email):
+            messages.error(request, "Email already registered!")
+            return redirect('home')
         
         if len(username)>10:
             messages.error(request, "Username must be under 10 charecters")
@@ -114,7 +114,7 @@ def signout(request):
 
 def activate(request, uidb64, token):
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         myuser = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         myuser = None
