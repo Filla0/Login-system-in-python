@@ -32,9 +32,9 @@ def signup(request):
             messages.error(request, "Username already exist! Please try some other username")
             return redirect('home')
         
-        if User.objects.filter(email=email):
-            messages.error(request, "Email already registered!")
-            return redirect('home')
+        # if User.objects.filter(email=email):
+        #     messages.error(request, "Email already registered!")
+        #     return redirect('home')
         
         if len(username)>10:
             messages.error(request, "Username must be under 10 charecters")
