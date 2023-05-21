@@ -123,3 +123,6 @@ def activate(request, uidb64, token):
         myuser.is_active = True
         myuser.save()
         login(request, myuser)
+        return('home')
+    else:
+        return render(request, 'activation_failed.html')
