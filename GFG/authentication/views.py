@@ -11,6 +11,8 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_text
 from . tokens import generate_token
 from django.core.mail import EmailMessage, send_mail
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+
 # Create your views here.
 def home(request):
     return render(request, "authentication/index.html")
@@ -109,3 +111,15 @@ def signout(request):
     logout(request)
     messages.success(request, "Logged Out successfully!")
     return redirect('home')
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        myuser = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        myuser = None
+    
+    if myuser is not None and generate_token.check_token(myuser, token):
+        myuser.is_active = True
+        myuser.save()
+        login(request, myuser)
