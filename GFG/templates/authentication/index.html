@@ -20,7 +20,7 @@
       body{
         background-color: #080710;
       }
-      .form{
+      .table {
           height: 520px;
           width: 400px;
           background-color: rgba(255,255,255,0.13);
@@ -34,15 +34,22 @@
           box-shadow: 0 0 40px rgba(8,7,16,0.6);
           padding: 50px 35px;
       }
-      .form {
+      .table {
           font-family: 'Poppins',sans-serif;
           color: #ffffff;
           letter-spacing: 0.5px;
           outline: none;
           border: none;
       }
-      .form h3{
+      .table h3{
           font-size: 32px;
+          font-weight: 500;
+          line-height: 42px;
+          text-align: center;
+      }
+
+      .table h4{
+          font-size: 22px;
           font-weight: 500;
           line-height: 42px;
           text-align: center;
@@ -66,7 +73,7 @@
     </head>
 
     <body>
-        <div class="form">
+        <div class="table">
             {% for message in messages %}
             <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                 <strong>Message:</strong> {{ message }}
@@ -75,7 +82,7 @@
                 </button>
             </div>
             {% endfor %}
-            <h3>Welcome to Geeks For Geeks</h3>
+            <h3>Welcome to my Python project</h3>
             {% if user.is_authenticated %}
             <h3>Hello {{ fname }}</h3>
             <h4>You're successfully logged in.</h4>
