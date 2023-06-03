@@ -59,16 +59,17 @@ def signup(request):
 
         #Welcome Email
 
-        subject = "Welcome to GFG - Django Login!!"
-        message = "Hello" + myuser.first_name + "!! \n" + "Welcome to GFG!! \n Thank for visiting our website \n we have also sent you a comfirmation email, please confirm your email address in order to activate your account. \n\n Regards\n Filimon"
+        subject = "Welcome to our website - Django Login!!"
+        message = "Hello" + myuser.first_name + "!! \n" + "Welcome to My first python project!! \n Thank for visiting our website \n we have also sent you a comfirmation email, please confirm your email address in order to activate your account. \n\n Regards\n Filimon"
         from_email = settings.EMAIL_HOST_USER
         to_list = [myuser.email]
         send_mail(subject, message, from_email, to_list, fail_silently=True)
+        jkhfsdkjhsdkfsdh
 
 
         # Email Address Confirmation Email
         current_site = get_current_site(request)
-        email_subject = "Confirm your email @ GFG - Django Login!!"
+        email_subject = "Confirm your email - Django Login!!"
         message2 = render_to_string('email_confirmation.html', {
             'name': myuser.first_name,
             'domain': current_site.domain,
@@ -104,10 +105,10 @@ def activate(request,uidb64,token):
         messages.success(request, "Your Account has been activated!!")
         return redirect('signin')
     else:
-        return render(request,'activation_failed.html')
+        return render(request,'activation_failed.html') 
 
 def signin(request):
-
+ 
     if request.method == "POST":
         username = request.POST['username']
         pass1 = request.POST['pass1']
